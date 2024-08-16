@@ -1,8 +1,8 @@
 # Go Stamping SAT
 
-## Table of Contents
+# Table of Contents
 - [Go Stamping SAT](#go-stamping-sat)
-  - [Table of Contents](#table-of-contents)
+- [Table of Contents](#table-of-contents)
   - [Brief Description](#brief-description)
   - [Main Features](#main-features)
   - [Additional Notes](#additional-notes)
