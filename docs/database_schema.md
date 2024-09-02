@@ -9,7 +9,7 @@
     - [Cfdi\_conf\_service Table](#cfdi_conf_service-table)
     - [Invoice Table](#invoice-table)
     - [Invoice\_x\_xml Table](#invoice_x_xml-table)
-    - [Cat\_unit Table](#cat_unit-table)
+    - [Cat\_cve\_unit Table](#cat_cve_unit-table)
     - [Cat\_concepts Table](#cat_concepts-table)
     - [Movements Table](#movements-table)
   - [Relationships](#relationships)
@@ -91,8 +91,8 @@
 | --------------------- | ----------- | ------------------------------------------------------------------------------------ |
 | invoice_id            | INTEGER     | Primary key, Foreign key to Invoice table                                            |
 | xml_name              | VARCHAR(80) | Name of the XML file associated with the invoice                                     |
-| original_string       | VARCHAR(50) | Original string that is part of the XML's content, often used for digital signatures |
-| encrypted_string      | VARCHAR(50) | Encrypted version of the original string                                             |
+| original_string       | TEXT        | Original string that is part of the XML's content, often used for digital signatures |
+| encrypted_string      | TEXT        | Encrypted version of the original string                                             |
 | xml_text              | XML         | Full content of the XML file                                                         |
 | document_type         | VARCHAR(6)  |                                                                                      |
 | encrypted_string_cfdi | VARCHAR(50) |                                                                                      |
@@ -108,13 +108,13 @@
 | created_at            | TIMESTAMP   | Date and time when the invoice_x_xml record was created                              |
 | updated_at            | TIMESTAMP   | Date and time when the invoice_x_xml record was last updated                         |
 
-### Cat_unit Table
+### Cat_cve_unit Table
 | Column          | Type        | Description                                                     |
 | --------------- | ----------- | --------------------------------------------------------------- |
 | unit_id         | SERIAL      | Primary key, auto-increment                                     |
-| con_description | VARCHAR(60) | Type of unit                                                    |
+| unit_cve        | VARCHAR(3)  | Stores the SAT "ACT" code from the c_Claveunidad catalog        |
+| con_description | VARCHAR(60) | Name of the unit                                                |
 | con_status      | BOOLEAN     | Flag to indicate whether the unit is active (1) or inactive (0) |
-
 
 ### Cat_concepts Table
 | Column          | Type        | Description                                                          |
@@ -122,9 +122,8 @@
 | con_id          | SERIAL      | Primary key, auto-increment                                          |
 | con_description | VARCHAR(60) | Name of the concept                                                  |
 | con_status      | BOOLEAN     | Flag to indicate whether the concept is active (1) or inactive (0)   |
-| unit_id         | INTEGER     | Foreign key to Cat_unit table                                        |
-| unit_cve        | SMALLINT    | Stores the SAT "ACT" code from the c_Claveunidad catalog             |
-| prod_serv_cve   | SMALLINT    | Stores the SAT product/service code from the c_ClaveProdServ catalog |
+| unit_id         | INTEGER     | Foreign key to Cat_cve_unit table                                    |
+| prod_serv_cve   | VARCHAR(8)  | Stores the SAT product/service code from the c_ClaveProdServ catalog |
 
 ### Movements Table
 | Column          | Type           | Description                                             |
@@ -159,3 +158,5 @@
 - **Movements**: Many-to-One relationship with **client**
 - **Movements**: Many-to-One relationship with **Invoice**
 - **Movements**: Many-to-One relationship with **Cat_concepts**
+
+- **Cat_concepts**: Many-to-One relationship with **Cat_cve_unit**
